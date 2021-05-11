@@ -1,9 +1,12 @@
 ///<reference path='../../node_modules/@types/p5/global.d.ts'/>
-const NNI = 4;
+const NNI = 5;
 const NNH = 4;
 const NNO = 2;
 const newPipeRate = 150;
-const TOTAL_BIRD_COUNT = 1000;
+const TOTAL_BIRD_COUNT = 100;
+const jumpForce = 2;
+const gravity = 1;
+const birdRad = 15;
 var birdX;
 var pipeWidth;
 var pipeGap;
@@ -12,10 +15,13 @@ var pipeMargin;
 var pipes;
 var pause = true;
 var gameCount = 0;
+var population
+
+var bird;
 
 function setup() {
 	frameRate(60);
-	createCanvas(600, 900);
+	createCanvas(400, 600);
 	background(0);
 
 	birdX = width / 4;
@@ -24,6 +30,8 @@ function setup() {
 	pipeSpeed = width/200;
 	pipeMargin = height / 16;  
 	pipes = new Pipes();
+	population = new Population();
+	
 }
 
 function draw() {
@@ -32,6 +40,7 @@ function draw() {
 		gameCount++;
 		pipes.update();
 		pipes.render();
+		population.update_render();
 	}
 }
 
