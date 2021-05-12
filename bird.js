@@ -4,7 +4,9 @@ class Bird{
     this.vel = 0;
     this.acc = 0;
     this.dead = false;
-    console.log(brain);
+    this.score = 0;
+    this.fitness = 0;
+    this.framesSurvived = 0;
     if (brain) {
       this.brain = brain.copy();
     } else {
@@ -22,9 +24,10 @@ class Bird{
     this.vel *= 0.95;
     this.y += this.vel;
     this.acc = 0;
+    this.framesSurvived += 1;
   }
 
-  render(){
+  render() {
     fill(255);
     ellipse(birdX, this.y, birdRad * 2, birdRad * 2);
   }
@@ -35,23 +38,37 @@ class Bird{
                   pipe.x / width,
                   pipe.pipeBottom / height,
                   pipe.pipeTop / height]
-    console.log(inputs);
     var output = this.brain.predict(inputs);
-    console.log(output);
     if(output[0] > output[1]){
-
-      console.log("jump");
       this.jump();
     }
   }
 
-  die(){
-    this.dead = true;
+  incrementScore(pipe) {
+    if (pipe != oldPipe) {
+      this.score += 1;
+      console.log(this.score);
+    }
+    oldPipe = pipe;
+    return this.score.valueOf();
   }
 
-  collision(){
-
+  collision(pipe) {
+    if (this.y + birdRad > height || this.y - birdRad < 0) {
+      return true;
+    }
+    if (pipe.x < birdX + birdRad && pipe.x + pipeWidth > birdX - birdRad) {
+      if (this.y - birdRad < pipe.pipeTop || this.y + birdRad > pipe.pipeBottom) {
+        return true;
+      }
+    }
+    return false;
   }
+
+  mutate(amount) {
+    this.brain.mutate(amount);
+  }
+
   jump() {
      this.acc -= jumpForce;
   }

@@ -1,13 +1,15 @@
-class Pipes{
+class Pipes {
   constructor() {
     this.pipeArray = [new Pipe()];
+    
   }
 
   getClosestPipe() {
     let closestPipe = null;
     let closestD = Infinity;
     this.pipeArray.forEach(p => {
-      let d = p.x - birdX;
+    
+      let d = (p.x + pipeWidth) - birdX;
       if (d < closestD && d > 0) {
         closestPipe = p;
         closestD = d;
@@ -23,14 +25,13 @@ class Pipes{
     if (gameCount % newPipeRate == 0) {
       this.pipeArray.push(new Pipe());
     }
-    for (var i = 0; i < this.pipeArray.length; i++){
-      if (this.pipeArray[i].x + pipeWidth < 0) {
-        this.pipeArray.shift();
-      }
+    if (this.pipeArray[0].x + pipeWidth < 0) {
+      this.pipeArray.shift();
     }
     this.pipeArray.forEach(pipe => {
       pipe.update();
-    }); 
+    });
+    
   }
   render() {
     this.pipeArray.forEach(pipe => {
