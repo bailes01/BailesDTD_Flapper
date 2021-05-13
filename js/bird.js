@@ -53,15 +53,13 @@ class Bird{
     return this.score.valueOf();
   }
 
-  collision(pipes) {
+  collision(pipe) {
     if (this.y + birdRad > height || this.y - birdRad < 0) {
       return true;
     }
-    for (var i = 0; i < pipes.pipeArray.length; i++){
-      if (pipes.pipeArray[i].x < birdX + birdRad && pipes.pipeArray[i].x + pipeWidth > birdX - birdRad) {
-        if (this.y - birdRad < pipes.pipeArray[i].pipeTop || this.y + birdRad > pipes.pipeArray[i].pipeBottom) {
-          return true;
-        }
+    if (pipe.x < birdX + birdRad && pipe.x + pipeWidth > birdX - birdRad) {
+      if (this.y - birdRad < pipe.pipeTop || this.y + birdRad > pipe.pipeBottom) {
+        return true;
       }
     }
     return false;

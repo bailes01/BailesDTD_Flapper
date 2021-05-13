@@ -2,7 +2,7 @@
 const NNI = 5;
 const NNH = 4;
 const NNO = 2;
-const newPipeRate = 120;
+const newPipeRate = 180;
 var birdCount = 10;
 var totalScore = 0;
 var gravity;
@@ -35,7 +35,7 @@ function setup() {
 	background(0);
 	speedSlider = createSlider(1, 100, 1);
 	speedLabel = createElement('p', "Speed: " + speedSlider.value());
-	popSlider = createSlider(10, 5000, 100);
+	popSlider = createSlider(10, 2000, 100);
 	popLabel = createElement('p', "Pop: " + popSlider.value());
 	speedLabel.parent(controlscontainer);
 	speedSlider.parent(controlscontainer);
@@ -47,10 +47,10 @@ function setup() {
 	popSlider.input(changePop);
 	birdRad = height / 30;
 	gravity = height / 600;
-	jumpForce = height / 25;
+	jumpForce = height / 20;
 	birdX = width / 4;
 	pipeWidth = width / 5;
-	pipeGap = height / 4;
+	pipeGap = height / 3.5;
 	pipeSpeed = width/200;
 	pipeMargin = height / 16;  
 	pipes = new Pipes();

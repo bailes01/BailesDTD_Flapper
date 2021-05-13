@@ -9,7 +9,7 @@ class Pipes {
     let closestD = Infinity;
     this.pipeArray.forEach(p => {
     
-      let d = (p.x + pipeWidth) - birdX;
+      let d = (p.x + pipeWidth) - (birdX - birdRad);
       if (d < closestD && d > 0) {
         closestPipe = p;
         closestD = d;
