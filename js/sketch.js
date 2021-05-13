@@ -61,8 +61,8 @@ function setup() {
   speedSlider.input(changeSpeed);
   popSlider.input(changePop);
   birdRad = height / 30;
-  gravity = height / 600;
-  jumpForce = height / 25;
+  gravity = height / 550;
+  jumpForce = height / 22;
   birdX = width / 4;
   pipeWidth = width / 5;
   pipeGap = height / 3;
