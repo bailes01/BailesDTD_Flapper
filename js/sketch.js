@@ -26,71 +26,80 @@ var speed;
 var cnvs;
 var cnvscontainer = document.getElementById("cnvs-container");
 var controlscontainer = document.getElementById("controls");
+var winsizes = [
+  [1000, 1500],
+  [800, 1200],
+  [600, 900],
+];
 const mutateAmount = 0.1;
 
 function setup() {
-	frameRate(60);
-	cnvs = createCanvas(600, 900);
-	cnvs.parent(cnvscontainer);
-	background(0);
-	speedSlider = createSlider(1, 100, 1);
-	speedLabel = createElement('p', "Speed: " + speedSlider.value());
-	popSlider = createSlider(10, 2000, 100);
-	popLabel = createElement('p', "Pop: " + popSlider.value());
-	speedLabel.parent(controlscontainer);
-	speedSlider.parent(controlscontainer);
-	popLabel.parent(controlscontainer);
-	popSlider.parent(controlscontainer);
-	speed = speedSlider.value();
-	birdCount = popSlider.value();
-	speedSlider.input(changeSpeed)
-	popSlider.input(changePop);
-	birdRad = height / 30;
-	gravity = height / 600;
-	jumpForce = height / 20;
-	birdX = width / 4;
-	pipeWidth = width / 5;
-	pipeGap = height / 3.5;
-	pipeSpeed = width/200;
-	pipeMargin = height / 16;  
-	pipes = new Pipes();
-	population = new Population();
-	
+  console.log(window.innerHeight);
+  for (var i = 0; i < winsizes.length; i++) {
+    var ws = winsizes[i];
+    if (ws[1] < parseInt(window.innerHeight)) {
+      var windowSize = ws;
+      break;
+    }
+  }
+
+  cnvs = createCanvas(windowSize[0], windowSize[1]);
+  frameRate(60);
+  cnvs.parent(cnvscontainer);
+  background(0);
+  speedSlider = createSlider(1, 100, 1);
+  speedLabel = createElement("p", "Speed: " + speedSlider.value());
+  popSlider = createSlider(10, 2000, 100);
+  popLabel = createElement("p", "Pop: " + popSlider.value());
+  speedLabel.parent(controlscontainer);
+  speedSlider.parent(controlscontainer);
+  popLabel.parent(controlscontainer);
+  popSlider.parent(controlscontainer);
+  speed = speedSlider.value();
+  birdCount = popSlider.value();
+  speedSlider.input(changeSpeed);
+  popSlider.input(changePop);
+  birdRad = height / 30;
+  gravity = height / 600;
+  jumpForce = height / 20;
+  birdX = width / 4;
+  pipeWidth = width / 5;
+  pipeGap = height / 3.5;
+  pipeSpeed = width / 200;
+  pipeMargin = height / 16;
+  pipes = new Pipes();
+  population = new Population();
 }
 
 function draw() {
-	if (pause == false) {
-		background(0);
-		for (var i = 0; i < speed; i++){
-			gameCount++;
-			pipes.update();
-			population.update();
-		}
-		pipes.render();
-		population.render();
-		
-	}
+  if (pause == false) {
+    background(0);
+    for (var i = 0; i < speed; i++) {
+      gameCount++;
+      pipes.update();
+      population.update();
+    }
+    pipes.render();
+    population.render();
+  }
 }
 
 function changePop() {
-	birdCount = popSlider.value();
-	popLabel.html("Pop: " + popSlider.value());
+  birdCount = popSlider.value();
+  popLabel.html("Pop: " + popSlider.value());
 }
 function changeSpeed() {
-	speed = speedSlider.value();
-	speedLabel.html("Speed: " + speedSlider.value());
+  speed = speedSlider.value();
+  speedLabel.html("Speed: " + speedSlider.value());
 }
 
-function keyPressed(){
-	if (key == " ") {
-		pause = !pause;
-		
-	}
+function keyPressed() {
+  if (key == " ") {
+    pause = !pause;
+  }
 }
 
 function newGame() {
-	gameCount = 0;
-	pipes = new Pipes();
+  gameCount = 0;
+  pipes = new Pipes();
 }
-
-
