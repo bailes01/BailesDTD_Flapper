@@ -65,7 +65,7 @@ function setup() {
   jumpForce = height / 22;
   birdX = width / 4;
   pipeWidth = width / 5;
-  pipeGap = height / 3.5;
+  pipeGap = height / 3;
   pipeSpeed = width / 200;
   pipeMargin = height / 16;
   pipes = new Pipes();
