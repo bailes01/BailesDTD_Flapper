@@ -29,7 +29,8 @@ var controlscontainer = document.getElementById("controls");
 var winsizes = [
   [1000, 1500],
   [800, 1200],
-  [600, 900],
+	[600, 900],
+	[400, 600]
 ];
 const mutateAmount = 0.1;
 
