@@ -3,7 +3,7 @@ const NNI = 5;
 const NNH = 4;
 const NNO = 2;
 const newPipeRate = 120;
-const TOTAL_BIRD_COUNT = 1000;
+const TOTAL_BIRD_COUNT = 10;
 var totalScore = 0;
 var gravity;
 var birdRad;
@@ -26,12 +26,12 @@ function setup() {
 	createCanvas(600, 900);
 	background(0);
 	slider = createSlider(1, 100, 1);
-	birdRad = height / 40;
+	birdRad = height / 30;
 	gravity = height / 600;
-	jumpForce = height/30
+	jumpForce = height / 25;
 	birdX = width / 4;
 	pipeWidth = width / 5;
-	pipeGap = height / 5;
+	pipeGap = height / 4;
 	pipeSpeed = width/200;
 	pipeMargin = height / 16;  
 	pipes = new Pipes();

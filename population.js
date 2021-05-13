@@ -13,7 +13,7 @@ class Population{
     for (var i = 0; i < this.birds.length; i++){
       this.birds[i].update();
       this.birds[i].think(closest);
-      if (this.birds[i].collision(closest)) {
+      if (this.birds[i].collision(pipes)) {
         this.savedBirds.push(this.birds.splice(i, 1)[0]);
         }
       }
