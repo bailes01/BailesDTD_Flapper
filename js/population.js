@@ -3,7 +3,7 @@ class Population{
     this.savedBirds = [];
     this.birds = [];
     this.generation = 1;
-    for (var i = 0; i < TOTAL_BIRD_COUNT; i++) {
+    for (var i = 0; i < birdCount; i++) {
       this.birds.push(new Bird());
     }
   }
@@ -66,7 +66,7 @@ class Population{
     this.generation += 1;
     this.calculateFitness();
     this.birds = [];
-    for (var i = 0; i < TOTAL_BIRD_COUNT; i++) {
+    for (var i = 0; i < birdCount; i++) {
       this.birds[i] = this.pickOne();
     }
     this.savedBirds = [];
