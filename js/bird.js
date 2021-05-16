@@ -7,6 +7,7 @@ class Bird{
     this.score = 0;
     this.fitness = 0;
     this.framesSurvived = 0;
+    this.color = color(255, 0, 255);
     if (brain) {
       this.brain = brain.copy();
     } else {

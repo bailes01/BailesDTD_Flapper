@@ -41,7 +41,8 @@ class Population{
       scoresum += sb.framesSurvived;
     });
     this.savedBirds.forEach(sb => {
-      sb.fitness = sb.framesSurvived/scoresum;
+      sb.fitness = sb.framesSurvived / scoresum;
+      sb.color = color(sb.fitness * 255, 0, 255);
     });
   }
 
