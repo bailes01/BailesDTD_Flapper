@@ -28,11 +28,16 @@ class Population{
     this.birds.forEach(bird => {
       bird.render();
     });
+    blendMode(BLEND);
     textSize(20);
+    fill(255);
     text("Score: " + totalScore, 20, 30);
     text("Gen " + this.generation, 20, 60);
     text("Birds left: " + this.birds.length, 20, 90);
-    console.log(this.savedBirds.length);
+    if (frameCount % 10 == 0) {
+      fps = round(frameRate());
+    }
+    text("Framerate: " + fps, 20, 120);
   }
 
   calculateFitness() {
@@ -42,7 +47,7 @@ class Population{
     });
     this.savedBirds.forEach(sb => {
       sb.fitness = sb.framesSurvived / scoresum;
-      sb.color = color(sb.fitness * 255, 0, 255);
+
     });
   }
 
@@ -57,7 +62,10 @@ class Population{
     index--;
 
     let bird = this.savedBirds[index];
+    console.log(bird);
     let child = new Bird(bird.brain);
+    
+    child.color = color(bird.fitness * 8 * 255, 0, 255, 100 + bird.fitness * 100* 20);
     child.mutate(mutateAmount);
     return child;
   }

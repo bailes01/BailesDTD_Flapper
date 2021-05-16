@@ -1,12 +1,21 @@
 body{
     display: block;
+    background-color: black;
 }
 
 #controls{
+    border: 5px dashed #ff00f4;
     padding: 20px;
     float:left;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ecff;
 }
 
 #cnvs-container{
     float:left;
+}
+
+#cnvs-container :only-child{
+    border: 5px solid #00ecff;
 }

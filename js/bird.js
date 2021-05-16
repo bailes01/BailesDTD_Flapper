@@ -7,7 +7,7 @@ class Bird{
     this.score = 0;
     this.fitness = 0;
     this.framesSurvived = 0;
-    this.color = color(255, 0, 255);
+    this.color = color(50, 0, 205, 120);
     if (brain) {
       this.brain = brain.copy();
     } else {
@@ -29,7 +29,9 @@ class Bird{
   }
 
   render() {
-    fill(255, 255, 255, 200);
+    noStroke();
+    fill(this.color);
+    blendMode(SCREEN);
     ellipse(birdX, this.y, birdRad * 2, birdRad * 2);
   }
 
