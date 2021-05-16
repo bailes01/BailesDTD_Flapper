@@ -54,17 +54,13 @@ class Population{
   pickOne() {
     var index = 0;
     var r = random(1);
-
     while (r > 0) {
       r -= this.savedBirds[index].fitness;
       index++;
     }
     index--;
-
     let bird = this.savedBirds[index];
-    console.log(bird);
     let child = new Bird(bird.brain);
-    
     child.color = color(bird.fitness * 8 * 255, 0, 255, 100 + bird.fitness * 100* 20);
     child.mutate(mutateAmount);
     return child;
