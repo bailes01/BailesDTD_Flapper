@@ -50,7 +50,6 @@ class Bird{
   incrementScore(pipe) {
     if (pipe != oldPipe) {
       this.score += 1;
-      console.log(this.score);
     }
     oldPipe = pipe;
     return this.score.valueOf();
