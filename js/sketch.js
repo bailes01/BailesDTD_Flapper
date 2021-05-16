@@ -1,4 +1,4 @@
-///<reference path='../../node_modules/@types/p5/global.d.ts'/>
+///<reference path='../../p5.global-mode.d.ts'/>
 const NNI = 5;
 const NNH = 4;
 const NNO = 2;
@@ -60,7 +60,7 @@ function setup() {
   birdCount = popSlider.value();
   speedSlider.input(changeSpeed);
   popSlider.input(changePop);
-  birdRad = height / 30;
+  birdRad = height / 25;
   gravity = height / 550;
   jumpForce = height / 22;
   birdX = width / 4;

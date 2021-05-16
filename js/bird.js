@@ -28,7 +28,7 @@ class Bird{
   }
 
   render() {
-    fill(255);
+    fill(255, 255, 255, 200);
     ellipse(birdX, this.y, birdRad * 2, birdRad * 2);
   }
 
