@@ -1,181 +1,196 @@
-// Other techniques for learning
+// import { Matrix } from "./matrix";
 
-class ActivationFunction {
-    constructor(func, dfunc) {
-      this.func = func;
-      this.dfunc = dfunc;
+class Layer_Dense {
+  constructor(n_inputs, n_neurons) {
+    if (n_inputs != undefined) {
+      this.weights = new Matrix(n_inputs, n_neurons);
+      this.weights.fillRand(0, 0.1);
+      this.biases = new Matrix(1, n_neurons);
+      this.biases.fillRand(0, 0.1);
     }
   }
+    
+    // console.log(this.weights);
+    // console.log(this.biases);
   
-  let sigmoid = new ActivationFunction(
-    x => 1 / (1 + Math.exp(-x)),
-    y => y * (1 - y)
-  );
-  
-  let tanh = new ActivationFunction(
-    x => Math.tanh(x),
-    y => 1 - (y * y)
-  );
-  
-  
-  class NeuralNetwork {
-    // TODO: document what a, b, c are
-    constructor(a, b, c) {
-      if (a instanceof NeuralNetwork) {
-        this.input_nodes = a.input_nodes;
-        this.hidden_nodes = a.hidden_nodes;
-        this.output_nodes = a.output_nodes;
-  
-        this.weights_ih = a.weights_ih.copy();
-        this.weights_ho = a.weights_ho.copy();
-  
-        this.bias_h = a.bias_h.copy();
-        this.bias_o = a.bias_o.copy();
-      } else {
-        this.input_nodes = a;
-        this.hidden_nodes = b;
-        this.output_nodes = c;
-  
-        this.weights_ih = new Matrix(this.hidden_nodes, this.input_nodes);
-        this.weights_ho = new Matrix(this.output_nodes, this.hidden_nodes);
-        this.weights_ih.randomize();
-        this.weights_ho.randomize();
-  
-        this.bias_h = new Matrix(this.hidden_nodes, 1);
-        this.bias_o = new Matrix(this.output_nodes, 1);
-        this.bias_h.randomize();
-        this.bias_o.randomize();
-      }
-  
-      // TODO: copy these as well
-      this.setLearningRate();
-      this.setActivationFunction();
-  
-  
-    }
-  
-    predict(input_array) {
-  
-      // Generating the Hidden Outputs
-      let inputs = Matrix.fromArray(input_array);
-      let hidden = Matrix.multiply(this.weights_ih, inputs);
-      hidden.add(this.bias_h);
-      // activation function!
-      hidden.map(this.activation_function.func);
-  
-      // Generating the output's output!
-      let output = Matrix.multiply(this.weights_ho, hidden);
-      output.add(this.bias_o);
-      output.map(this.activation_function.func);
-  
-      // Sending back to the caller!
-      return output.toArray();
-    }
-  
-    setLearningRate(learning_rate = 0.1) {
-      this.learning_rate = learning_rate;
-    }
-  
-    setActivationFunction(func = sigmoid) {
-      this.activation_function = func;
-    }
-  
-    train(input_array, target_array) {
-      // Generating the Hidden Outputs
-      let inputs = Matrix.fromArray(input_array);
-      let hidden = Matrix.multiply(this.weights_ih, inputs);
-      hidden.add(this.bias_h);
-      // activation function!
-      hidden.map(this.activation_function.func);
-  
-      // Generating the output's output!
-      let outputs = Matrix.multiply(this.weights_ho, hidden);
-      outputs.add(this.bias_o);
-      outputs.map(this.activation_function.func);
-  
-      // Convert array to matrix object
-      let targets = Matrix.fromArray(target_array);
-  
-      // Calculate the error
-      // ERROR = TARGETS - OUTPUTS
-      let output_errors = Matrix.subtract(targets, outputs);
-  
-      // let gradient = outputs * (1 - outputs);
-      // Calculate gradient
-      let gradients = Matrix.map(outputs, this.activation_function.dfunc);
-      gradients.multiply(output_errors);
-      gradients.multiply(this.learning_rate);
-  
-  
-      // Calculate deltas
-      let hidden_T = Matrix.transpose(hidden);
-      let weight_ho_deltas = Matrix.multiply(gradients, hidden_T);
-  
-      // Adjust the weights by deltas
-      this.weights_ho.add(weight_ho_deltas);
-      // Adjust the bias by its deltas (which is just the gradients)
-      this.bias_o.add(gradients);
-  
-      // Calculate the hidden layer errors
-      let who_t = Matrix.transpose(this.weights_ho);
-      let hidden_errors = Matrix.multiply(who_t, output_errors);
-  
-      // Calculate hidden gradient
-      let hidden_gradient = Matrix.map(hidden, this.activation_function.dfunc);
-      hidden_gradient.multiply(hidden_errors);
-      hidden_gradient.multiply(this.learning_rate);
-  
-      // Calcuate input->hidden deltas
-      let inputs_T = Matrix.transpose(inputs);
-      let weight_ih_deltas = Matrix.multiply(hidden_gradient, inputs_T);
-  
-      this.weights_ih.add(weight_ih_deltas);
-      // Adjust the bias by its deltas (which is just the gradients)
-      this.bias_h.add(hidden_gradient);
-  
-      // outputs.print();
-      // targets.print();
-      // error.print();
-    }
-  
-    serialize() {
-      return JSON.stringify(this);
-    }
-  
-    static deserialize(data) {
-      if (typeof data == 'string') {
-        data = JSON.parse(data);
-      }
-      let nn = new NeuralNetwork(data.input_nodes, data.hidden_nodes, data.output_nodes);
-      nn.weights_ih = Matrix.deserialize(data.weights_ih);
-      nn.weights_ho = Matrix.deserialize(data.weights_ho);
-      nn.bias_h = Matrix.deserialize(data.bias_h);
-      nn.bias_o = Matrix.deserialize(data.bias_o);
-      nn.learning_rate = data.learning_rate;
-      return nn;
-    }
-  
-  
-    // Adding function for neuro-evolution
-    copy() {
-      return new NeuralNetwork(this);
-    }
-  
-    mutate(rate) {
-      function mutate(val) {
-        if (Math.random() < rate) {
-          // return 2 * Math.random() - 1;
-          return val + randomGaussian(0, 0.1);
-        } else {
-          return val;
-        }
-      }
-      this.weights_ih.map(mutate);
-      this.weights_ho.map(mutate);
-      this.bias_h.map(mutate);
-      this.bias_o.map(mutate);
-    }
-  
-  
-  
+
+  addRandom = (m, s) => m + Matrix.randn(0, s);
+
+  forward(inputs) {
+    this.output = Matrix.add(Matrix.dot(inputs, this.weights), this.biases);
   }
+
+  update_weights(stdev) {
+    this.weights.opFunc(this.addRandom, stdev);
+  }
+
+  update_biases(stdev) {
+    this.biases.opFunc(this.addRandom, stdev);
+  }
+
+  copy() {
+    let out = new Layer_Dense();
+    out.weights = this.weights.copy();
+    out.biases = this.biases.copy();
+    return out;
+  }
+}
+
+class A_ReLU {
+  forward(inputs) {
+    this.output = Matrix.modFunc((i) => (i < 0 ? 0 : i), inputs);
+  }
+  copy() {
+    return new A_ReLU();
+  }
+}
+
+class A_SoftMax {
+  forward(inputs) {
+    var sub_inputs = Matrix.sub(inputs, inputs.max(1, true));
+    var exp_values = Matrix.modFunc((i) => Math.E ** i, sub_inputs);
+    var probs = Matrix.div(exp_values, exp_values.sum(1, true));
+    this.output = probs;
+    return;
+  }
+  copy() {
+    return new A_SoftMax();
+  }
+}
+
+class Loss {
+  calculate(output, y) {
+    var sample_losses = this.forward(output, y);
+    var data_loss = sample_losses.mean();
+    return data_loss;
+  }
+}
+
+class L_CategCrossEnt extends Loss {
+  forward(y_preds, y_true) {
+    var y_preds_clipped = Matrix.clip(y_preds, 10e-8, 1 - 10e-8);
+    if (y_true.rows() != 1) {
+      y_true = y_true.iOfMax(1);
+    }
+    var confidences = y_preds_clipped.selectNth(y_true);
+    var neg_log_probs = Matrix.modFunc((x) => -Math.log(x), confidences);
+    return neg_log_probs;
+  }
+}
+
+
+class Accuracy {
+  calculate(preds, targets) {
+    var preds = preds.iOfMax(1);
+    if (targets.rows() != 1) {
+      targets = targets.iOfMax(1);
+    }
+    var sum = 0;
+    for (let i = 0; i < preds.cols(); i++) {
+      if (preds.grid[0][i] === targets.grid[0][i]) sum++;
+    }
+    return sum / preds.cols();
+  }
+}
+
+class NeuralNetwork{
+  constructor(i, h, o) {
+    this.i = i;
+    this.h = h;
+    this.o = o;
+    this.layer1 = new Layer_Dense(i, h);
+    this.layer2 = new Layer_Dense(h, o);
+    this.act1 = new A_ReLU();
+    this.act2 = new A_SoftMax();
+  }
+
+  predict(inputs) {
+    inputs = new Matrix(inputs);
+    this.layer1.forward(inputs);
+    this.act1.forward(this.layer1.output);
+    this.layer2.forward(this.act1.output);
+    this.act2.forward(this.layer2.output);
+    return this.act2.output.grid[0];
+  }
+
+  copy() {
+    let newNet = new NeuralNetwork(this.i,this.h, this.o);
+    newNet.layer1 = this.layer1.copy();
+    newNet.act1 = this.act1.copy();
+    newNet.layer2 = this.layer2.copy();
+    newNet.act2 = this.act2.copy();
+    return newNet;
+  }
+
+  mutate(factor) {
+    this.layer1.update_weights(factor);
+    this.layer1.update_biases(factor);
+    this.layer2.update_weights(factor);
+    this.layer2.update_biases(factor);
+  }
+}
+
+var nn = new NeuralNetwork(5, 4, 2);
+let output = nn.predict([0.4, 0.4, 0.6, 0.5, 0.2]);
+
+console.log(output);
+var sm_out = new Matrix([
+  [0.7, 0.2, 0.1],
+  [0.5, 0.1, 0.4],
+  [0.02, 0.9, 0.08],
+]);
+
+var targets = new Matrix([
+  [1, 0, 0],
+  [0, 1, 0],
+  [0, 1, 0],
+]);
+
+// var m = new Matrix(10, 10);
+// m.fillInc();
+// m.console();
+// var inputs = new Matrix([0.5, 0.2, 0.3, 0.4, 0.2]);
+// var layer = new Layer_Dense(5, 5);
+// var activationSoftMax = new Activation_SoftMax();
+// activationSoftMax.forward(inputs);
+// logMatrix(activationSoftMax.output);
+// var relu = new Activation_ReLU();
+// layer.forward(inputs);
+// relu.forward(layer.output);
+// console.log(relu.output);
+
+// var iterations = 100000000;
+
+// // measure speed of function1
+// var start1 = window.performance.now();
+// for (var i = 0; i < iterations; i++) {
+//   relu.forward(layer.output);
+// }
+// var end1 = window.performance.now();
+// var time1 = Math.round(end1 - start1);
+
+// // var matrix1 = new Matrix(50, 100);
+// // var matrix2 = Matrix.div(new Matrix(50, 100), 2);
+
+// // measure speed of function2
+// var start2 = window.performance.now();
+// for (var i = 0; i < iterations; i++) {
+
+//   relu.forward2(layer.output);
+// }
+// var end2 = window.performance.now();
+// var time2 = Math.round(end2 - start2);
+
+// // output which function is faster and speed of each function
+// console.log("Function1:" + time1 + "ms");
+// console.log("Function2:" + time2 + "ms");
+
+// if (time1 > time2) {
+//   var result = Math.round(100 - (time2 / time1) * 100);
+//   console.log("Function2 is faster than Function1 by " + result + "%");
+// }
+
+// if (time2 > time1) {
+//   var result = Math.round(100 - (time1 / time2) * 100);
+//   console.log("Function1 is faster than Function2 by " + result + "%");
+// }

@@ -1,4 +1,4 @@
-///<reference path='../../p5.global-mode.d.ts'/>
+///<reference path='../../../p5.global-mode.d.ts'/>
 const NNI = 5;
 const NNH = 4;
 const NNO = 2;
