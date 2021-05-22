@@ -3,6 +3,11 @@ body{
     background-color: black;
 }
 
+h1{
+    margin: 0;
+    color: #ff00f4;
+}
+
 #controls{
     border: 5px dashed #ff00f4;
     padding: 20px;
@@ -11,6 +16,14 @@ body{
     font-family: 'Courier New', Courier, monospace;
     color: #00ecff;
 }
+
+#controls a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+
 
 #cnvs-container{
     float:left;

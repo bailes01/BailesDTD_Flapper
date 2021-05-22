@@ -28,6 +28,10 @@ var cnvs;
 var started = false;
 var cnvscontainer = document.getElementById("cnvs-container");
 var controlscontainer = document.getElementById("controls");
+var githubLink = document.createElement("a");
+githubLink.setAttribute('href', "https://github.com/bailes01/BailesDTD_Flapper/");
+githubLink.innerHTML = "<br/>Github repo";
+
 var winsizes = [
   [1000, 1500],
   [800, 1200],
@@ -64,6 +68,7 @@ function setup() {
   birdCount = popSlider.value();
   speedSlider.input(changeSpeed);
   popSlider.input(changePop);
+  controlscontainer.appendChild(githubLink);
   birdRad = height / 25;
   gravity = height / 550;
   jumpForce = height / 20;
