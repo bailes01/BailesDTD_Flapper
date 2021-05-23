@@ -52,11 +52,10 @@ function setup() {
 
   cnvs = createCanvas(windowSize[0], windowSize[1]);
   
-  frameRate(60);
-  // smooth();
+  smooth();
   cnvs.parent(cnvscontainer);
   background(0);
-  speedSlider = createSlider(1, 100, 1, 1);
+  speedSlider = createSlider(1, 50, 1, 1);
   speedLabel = createElement("p", "Speed: " + speedSlider.value());
   popSlider = createSlider(10, 2000, 100, 10);
   popLabel = createElement("p", "Pop: " + popSlider.value());
@@ -84,16 +83,17 @@ function setup() {
 function draw() {
   if (pause == false) {
     blendMode(BLEND);
-    background(0);
     for (var i = 0; i < speed; i++) {
+      background(0);
       gameCount++;
       pipes.update();
       population.update();
     }
     pipes.render();
     population.render();
+    }
   }
-}
+
 
 function changePop() {
   birdCount = popSlider.value();

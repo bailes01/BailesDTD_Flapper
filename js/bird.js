@@ -42,7 +42,7 @@ class Bird{
                   pipe.pipeBottom / height,
                   pipe.pipeTop / height]
     var output = this.brain.predict(inputs);
-    if(output[0] > output[1]){
+    if(output[0] < output[1]){
       this.jump();
     }
   }
